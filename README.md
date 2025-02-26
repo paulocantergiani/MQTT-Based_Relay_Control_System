@@ -9,19 +9,7 @@ This project implements a **relay control system** using **ESP8266** and/or **ES
 - **User authentication** and security features.
 - **Supports multiple relays** via AWS IoT MQTT.
 
-## System Architecture
 
-```
-+-------------------+       MQTT       +-------------------+
-|  Web Application | <----------------> |  AWS IoT Broker  |
-+-------------------+                   +-------------------+
-       |                                          |
-       | HTTP                                     | MQTT
-       v                                          v
-+-------------------+                   +-------------------+
-|  Flask Backend   |                   | ESP8266/ESP32 MCU |
-|  (Python)        |                   |   (Gate Control)  |
-+-------------------+                   +-------------------+
 ```
 
 ## Project Structure
