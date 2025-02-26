@@ -10,8 +10,6 @@ This project implements a **relay control system** using **ESP8266** and/or **ES
 - **Supports multiple relays** via AWS IoT MQTT.
 
 
-```
-
 ## Project Structure
 ```
 .
