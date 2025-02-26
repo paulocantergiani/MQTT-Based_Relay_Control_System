@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gate Control Panel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gate Control Panel</h1>
+        <div class="grid">
+            <div class="gate-card">
+                <h2>Gate 1</h2>
+                <button class="open" onclick="sendMQTTCommand('relays/relay1/control', 'turn_on')">Open</button>
+                <button class="close" onclick="sendMQTTCommand('relays/relay1/control', 'turn_off')">Close</button>
+            </div>
+            <div class="gate-card">
+                <h2>Gate 2</h2>
+                <button class="open" onclick="sendMQTTCommand('relays/relay2/control', 'turn_on')">Open</button>
+                <button class="close" onclick="sendMQTTCommand('relays/relay2/control', 'turn_off')">Close</button>
+            </div>
+            <div class="gate-card">
+                <h2>Gate 3</h2>
+                <button class="open" onclick="sendMQTTCommand('relays/relay3/control', 'turn_on')">Open</button>
+                <button class="close" onclick="sendMQTTCommand('relays/relay3/control', 'turn_off')">Close</button>
+            </div>
+            <div class="gate-card">
+                <h2>Gate 4</h2>
+                <button class="open" onclick="sendMQTTCommand('relays/relay4/control', 'turn_on')">Open</button>
+                <button class="close" onclick="sendMQTTCommand('relays/relay4/control', 'turn_off')">Close</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
