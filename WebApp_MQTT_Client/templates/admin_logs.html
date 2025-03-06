@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Logs de Comandos MQTT{% endblock %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h1 class="mb-4 text-center">Logs de Comandos MQTT</h1>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Usuário</th>
+            <th>Comando</th>
+            <th>Data/Hora</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in logs %}
+          <tr>
+            <td>{{ log.id }}</td>
+            <td>{{ log.username }}</td>
+            <td>{{ log.command }}</td>
+            <td>{{ log.timestamp }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

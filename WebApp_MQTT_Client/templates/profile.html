@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Perfil{% endblock %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h1 class="mb-4 text-center">Seu Perfil</h1>
+    <div class="row align-items-center">
+      <div class="col-md-4 text-center mb-3">
+        {% if user.profile_pic %}
+          <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_pic) }}" alt="Foto de Perfil" class="img-fluid img-thumbnail rounded-circle" style="max-width: 150px;">
+        {% else %}
+          <img src="{{ url_for('static', filename='default_profile.png') }}" alt="Perfil Padrão" class="img-fluid img-thumbnail rounded-circle" style="max-width: 150px;">
+        {% endif %}
+      </div>
+      <div class="col-md-8">
+        <h3>{{ user.username }}</h3>
+        <p>
+          {% if user.access_start and user.access_end %}
+            Acesso permitido entre: <strong>{{ user.access_start.strftime('%H:%M') }}</strong> e <strong>{{ user.access_end.strftime('%H:%M') }}</strong>
+          {% else %}
+            Horário de acesso não configurado.
+          {% endif %}
+        </p>
+        <hr>
+        <h4>Atualizar Foto de Perfil</h4>
+        <form method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <input type="file" name="profile_pic" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+        <!-- New Change Password Button for regular users -->
+        <div class="text-center mt-3">
+          <a href="{{ url_for('user_change_password') }}" class="btn btn-secondary">Alterar Senha</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

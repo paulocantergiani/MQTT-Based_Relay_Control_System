@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Gerenciar Usuários{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="mb-4 text-center">Criar Novo Usuário</h3>
+        <form method="post">
+          <div class="mb-3">
+            <label for="username" class="form-label">Usuário:</label>
+            <input type="text" class="form-control" name="username" id="username" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Senha:</label>
+            <input type="password" class="form-control" name="password" id="password" required>
+          </div>
+          <div class="mb-3">
+            <label for="role" class="form-label">Função:</label>
+            <select name="role" id="role" class="form-select">
+              <option value="user">Usuário</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="access_start" class="form-label">Início do Acesso (HH:MM):</label>
+            <input type="time" name="access_start" id="access_start" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="access_end" class="form-label">Fim do Acesso (HH:MM):</label>
+            <input type="time" name="access_end" id="access_end" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Criar Usuário</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="mb-4 text-center">Todos os Usuários</h3>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped">
+            <thead class="table-light">
+              <tr>
+                <th>Foto</th>
+                <th>ID</th>
+                <th>Usuário</th>
+                <th>Função</th>
+                <th>Intervalo de Acesso</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in users %}
+              <tr>
+                <td>
+                  {% if user.profile_pic %}
+                    <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_pic) }}" alt="Foto" width="50" height="50" class="img-fluid rounded">
+                  {% else %}
+                    {% if user.role == 'admin' %}
+                      <img src="{{ url_for('static', filename='default_admin.png') }}" alt="Admin Padrão" width="50" height="50" class="img-fluid rounded">
+                    {% else %}
+                      <img src="{{ url_for('static', filename='default_profile.png') }}" alt="Usuário Padrão" width="50" height="50" class="img-fluid rounded">
+                    {% endif %}
+                  {% endif %}
+                </td>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                  {% if user.access_start and user.access_end %}
+                    {{ user.access_start.strftime('%H:%M') }} - {{ user.access_end.strftime('%H:%M') }}
+                  {% else %}
+                    Não configurado
+                  {% endif %}
+                </td>
+                <td>
+                  <a href="{{ url_for('edit_user', user_id=user.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                  <!-- New Change Password Button for Admin -->
+                  <a href="{{ url_for('admin_change_password', user_id=user.id) }}" class="btn btn-sm btn-info">Alterar Senha</a>
+                  {% if user.username != current_user.username %}
+                  <form action="{{ url_for('delete_user', user_id=user.id) }}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja deletar este usuário?');">Deletar</button>
+                  </form>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <a href="{{ url_for('view_logs') }}" class="btn btn-secondary w-100 mt-3">Ver Logs de Comandos</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

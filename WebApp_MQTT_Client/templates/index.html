@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Controle de Portões CCUB{% endblock %}
+{% block content %}
+<div class="text-center">
+  <h1 class="mb-4">Painel de Controle dos Portões do CCUB</h1>
+</div>
+<div class="row mb-4">
+  <div class="col-md-6">
+    <div class="card shadow-sm mb-3">
+      <div class="card-body text-center">
+        <h3>Portão Externo</h3>
+        <div class="slider-container my-3">
+          <input type="range" id="portaoExternoSlider" class="range-slider" min="0" max="100" value="0" oninput="checkSlider(this, 'externo')">
+          <p id="portaoExternoLabel" class="mt-2">Arraste para ativar o Portão Externo</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card shadow-sm mb-3">
+      <div class="card-body text-center">
+        <h3>Portão Interno</h3>
+        <div class="slider-container my-3">
+          <input type="range" id="portaoInternoSlider" class="range-slider" min="0" max="100" value="0" oninput="checkSlider(this, 'interno')">
+          <p id="portaoInternoLabel" class="mt-2">Arraste para ativar o Portão Interno</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  function checkSlider(slider, gateId) {
+    if (slider.value >= 95 && !slider.disabled) {
+      slider.disabled = true;
+      var labelId = (gateId === 'externo') ? 'portaoExternoLabel' : 'portaoInternoLabel';
+      var label = document.getElementById(labelId);
+      label.textContent = "Portão abrindo...";
+      triggerGate(gateId, slider, label);
+    }
+  }
+  
+  function triggerGate(gateId, slider, label) {
+    fetch(`/gate/${gateId}/open`, { method: 'POST' })
+      .then(response => {
+        label.textContent = "Portão Aberto!";
+        label.style.color = "green";
+        setTimeout(function() {
+          fetch(`/gate/${gateId}/close`, { method: 'POST' })
+            .then(() => {
+              label.textContent = gateId === 'externo' ? "Arraste para ativar o Portão Externo" : "Arraste para ativar o Portão Interno";
+              label.style.color = "";
+              slider.disabled = false;
+              slider.value = 0;
+            });
+        }, 500);
+      });
+  }
+</script>
+<style>
+  .range-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    margin: 20px 0;
+  }
+  .range-slider:focus {
+    outline: none;
+  }
+  .range-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: #d3d3d3;
+    border-radius: 4px;
+  }
+  .range-slider::-webkit-slider-thumb {
+    border: none;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -10px;
+  }
+  .range-slider::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: #d3d3d3;
+    border-radius: 4px;
+  }
+  .range-slider::-moz-range-thumb {
+    border: none;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+  }
+</style>
+{% endblock %}

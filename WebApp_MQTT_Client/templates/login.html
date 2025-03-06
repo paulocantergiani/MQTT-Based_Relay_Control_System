@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Entrar{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h1 class="mb-4 text-center">Entrar</h1>
+        <form method="post">
+          <div class="mb-3">
+            <label for="username" class="form-label">Usuário:</label>
+            <input type="text" class="form-control" name="username" id="username" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Senha:</label>
+            <input type="password" class="form-control" name="password" id="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

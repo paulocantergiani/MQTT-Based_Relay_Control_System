@@ -18,8 +18,8 @@ const uint8_t A4_ON[] = {0xA0, 0x04, 0x01, 0xA5};
 const uint8_t A4_OFF[] = {0xA0, 0x04, 0x00, 0xA4};
 
 // Credenciais WiFi
-const char *ssid = "S21 FE";
-const char *password = "abcdefgh";
+const char *ssid = "";
+const char *password = "";
 
 // Endpoint da AWS IoT
 const char *awsEndpoint = "";
@@ -27,19 +27,16 @@ const char *awsEndpoint = "";
 // Certificados e chave privada (armazenados em PROGMEM)
 const char ca_cert[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
-
 -----END CERTIFICATE-----
   )EOF";
-
-const char client_cert[] PROGMEM = R"EOF(
+  
+  const char client_cert[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
-
 -----END CERTIFICATE-----
   )EOF";
-
-const char client_key[] PROGMEM = R"EOF(
+  
+  const char client_key[] PROGMEM = R"EOF(
 -----BEGIN RSA PRIVATE KEY-----
-
 -----END RSA PRIVATE KEY-----
   )EOF";
 
@@ -57,7 +54,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("\nIniciando ESP32 AWS IoT...");
-  pinMode(2, OUTPUT);
+  pinMode (2, OUTPUT);
 
   // Inicializa a comunicação UART
   Serial2.begin(UART_BAUD, SERIAL_8N1, RX_PIN, TX_PIN);

@@ -1,0 +1,7 @@
+Flask
+paho-mqtt
+Flask-Login
+Flask-SQLAlchemy
+gunicorn
+pytz
+psycopg2-binary
